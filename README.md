@@ -89,7 +89,7 @@ Firmwalker produces lots of output, however some interesting findings are presen
 If we take it one step further, we can find the private key of the camera in /etc_ro/serverkey.pem:
 <img src="image2.png">
 
-##### Other Firmwalker Findings
+### Other Firmwalker Findings
 
 * root and password 
 <img src="image18.png">
