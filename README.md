@@ -94,7 +94,11 @@ I was able to confirm this by searching for the file, and finding some code in /
 
 
 #### Interesting Findings
-After searching through the files on the device, I found many references to a developer named "andy". Below, we can see in the wireless section of a config file, a few test SSIDs that do not appear to be commented out. All the test SSIDs have andy's name in them, and the password of PSK12345. 
+After searching through the files on the device, I found many references to a developer named "andy". It appears telnet was disabled sometime in 2012. According to the date of the comment, Andy was patching security issues right before the July 4th holiday. If the month and date are flipped, Andy was reviewing code on a Saturday. I aspire to be like Andy. 
+<img src="image27.png">
+
+
+Below, we can see in the wireless section of a config file, a few test SSIDs that do not appear to be commented out. All the test SSIDs have andy's name in them, and the password of PSK12345. 
 <img src="image26.png">
 
 
