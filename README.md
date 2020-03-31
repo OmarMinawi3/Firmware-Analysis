@@ -11,7 +11,7 @@
 ##### The first step of this process is to choose an IoT device to analyze. We have chosen the D-Link DCS-5020L network camera. This $120 camera has many features such as a wide viewing range with pan/tilt, mobile app functionality and can even function as a Wi-Fi extender. 
 
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image17.png)
-<img src="https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image17.png">
+<img src="image17.png">
 
 
 
