@@ -22,45 +22,34 @@
 
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image9.png)
 
-
-
-
-Figure X - Output of the file command
-
 #### Step 4: Analyze the image using Binwalk
-The next step is to analyze the image using a binwalk. This will tell us some important details about the content of the image. As per Figure X, There appears to be a UBOOT bootloader at the 99360 offset. The OS is Linux and it is running a MIPS instruction set. At offset 327744 there is some LZMA compressed data, which is the file system. The uImage header above it says it is a OS Kernel Image compressed with LZMA. 
+##### The next step is to analyze the image using a Binwalk. This will tell us some important details about the content of the image. As per the image below, There appears to be a UBOOT bootloader at the 99360 offset. The OS is Linux and it is running MIPS architecture. At offset 327744 there is some LZMA compressed data, which is the file system. The uImage header above it says it is a OS Kernel Image compressed with LZMA. 
 
-
-
-
-
-
-
-
-Figure X - Running the Binwalk command on the binary file. 
-
-
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image16.png)
 
 #### Step 5: Entropy Analysis Before Extraction
-Before we extract the file, we can do entropy analysis to determine if the entire file system is compressed. We can use Binwalk with the “-e” flag to do this. Running the command in Figure X displays an entropy plot as shown in Figure X. As per the entropy plot, the entire firmware file appears to have a high entropy, which makes sense, as the file system is compressed. 
-Figure X - Determining Entropy of firmware file using binwalk
+##### Before we extract the file, we can do entropy analysis to determine if the entire file system is compressed. We can use Binwalk with the “-e” flag to do this. Running the command in the following figure displays entropy output and an entropy plot. As per the entropy plot, the entire firmware file appears to have a high entropy, which makes sense, as the file system is compressed. 
 
+###### Entropy Command:
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image6.png)
 
-Figure X - Examining the entropy plot of the file
-
+###### Entropy Plot: 
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image14.png)
 
 #### Step 6: Extracting the compressed file system using DD
-The next step is to extract the file system from the firmware file. To do this, we need to provide an input file, output file, bytes to skip, byte size and number of bytes. The complete command can be seen in figure Z. The skip and count fields are determined from the binwalk output, and the bytesize (bs) field can remain as 1. 
-
-Figure Z - Complete DD command to extract file system
-
-The skip field can be determined using the “decimal” or offset value in the original binwalk output, as highlighted in Figure X. This value is 327744. 
+##### The next step is to extract the file system from the firmware file. To do this, we need to provide an input file, output file, bytes to skip, byte size and number of bytes. The complete command is:
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image11.png)
 
 
-Figure X - Highlighted Skip value for compressed file system extraction
+##### The *skip* and *count* fields are determined from the Binwalk output when initially analyzing the file. The *bs* (byte size) field can remain as 1. 
 
-The count is the image size, which can also be determined by the original binwalk output. This value is highlighted in Figure X and is 7301445. 
-Figure X - Highlighted image size filed used for count parameter in DD command
+
+##### The *skip* field can be determined using the “decimal” or offset value in the original Binwalk output. This value is 327744. 
+
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image13.png)
+
+##### The *count* is the image size, which can also be determined by the original Binwalk output. This value is 7301445. 
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image4.png)
 
 
 #### Step 7: Decompress the extracted file
