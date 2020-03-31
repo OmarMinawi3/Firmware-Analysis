@@ -3,7 +3,7 @@
 ##### In this blog post, we will go through the full firmware analysis and extraction process. We will utilize tools such as binwalk, DD, firmwalker, strings and a decompression tool. We will discuss two approaches to extract the filesystem, the first using DD and the second using binwalk. 
 
 #### Tools and Files Needed:
-##### 1. Firmware file for device. We will be using the [D-Link DCS-5020L Camera.](https://support.dlink.ca/ProductInfo.aspx?m=DCS-5020L)
+##### 1. Firmware file for device. We will be using the [D-Link DCS-5020L Camera].(https://support.dlink.ca/ProductInfo.aspx?m=DCS-5020L)
 ##### 2. [Binwalk](https://github.com/ReFirmLabs/binwalk)
 ##### 3. [Firmwalker](https://github.com/craigz28/firmwalker)
 
@@ -40,12 +40,8 @@
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image14.png)
 
 #### Step 6: Extracting the compressed file system using DD
-##### The next step is to extract the file system from the firmware file. To do this, we need to provide an input file, output file, bytes to skip, byte size and number of bytes. The complete command is:
+##### The next step is to extract the file system from the firmware file. To do this, we need to provide an input file, output file, bytes to skip, byte size and number of bytes. The *skip* and *count* fields are determined from the Binwalk output when initially analyzing the file. The *bs* (byte size) field can remain as 1.
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image11.png)
-
-
-##### The *skip* and *count* fields are determined from the Binwalk output when initially analyzing the file. The *bs* (byte size) field can remain as 1. 
-
 
 ##### The *skip* field can be determined using the “decimal” or offset value in the original Binwalk output. This value is 327744. 
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image13.png)
@@ -88,11 +84,12 @@
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image10.png)
 
 
-Firmwalker produces lots of output, however some interesting findings are present in Figure Y. It appears the camera has the telnet binaries installed and it has found some private keys. 
-
-Figure Y - Telnet configuration and private keys. 
-
-If we take it one step further, we can find the private key of the server in /etc_ro/serverkey.pem, as shown in Figure Z. 
+##### Firmwalker produces lots of output, however some interesting findings are present below. It appears the camera has some telnet binaries installed and it has found some private keys: 
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image7.png)
 
 
-Figure Z - Private key
+##### If we take it one step further, we can find the private key of the camera in /etc_ro/serverkey.pem:
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image2.png)
+
+
+
