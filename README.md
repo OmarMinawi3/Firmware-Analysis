@@ -85,11 +85,21 @@ Now that we have the root directory extracted, we can use Firmwalker to analyze 
 Firmwalker produces lots of output, however some interesting findings are present below. It appears the camera has some telnet binaries installed and it has found some private keys: 
 <img src="image7.png">
 
-
-If we take it one step further, we can find the private key of the camera in /etc_ro/serverkey.pem:
+The SSL key for the camera appears to be located in /etc_ro/serverkey.pem:
 <img src="image2.png">
 
-### Other Firmwalker Findings
+I was able to confirm this by searching for the file, and finding some code in /etc_ro/gensslkey.sh. I am not sure if the camera generates a new certificate before use. The a new cert could be generated when the user enables HTTPS on the config page.
+<img src="image25.png">
+
+
+
+#### Interesting Findings
+After searching through the files on the device, I found many references to a developer named "andy". Below, we can see in the wireless section of a config file, a few test SSIDs that do not appear to be commented out. All the test SSIDs have andy's name in them, and the password of PSK12345. 
+<img src="image24.png">
+
+
+
+##### Other Firmwalker Findings
 
 * root and password 
 
