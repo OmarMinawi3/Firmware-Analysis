@@ -2,27 +2,32 @@
 
 ##### In this blog post, we will go through the full firmware analysis and extraction process. We will utilize tools such as binwalk, DD, firmwalker, strings and a decompression tool. We will discuss two approaches to extract the filesystem, the first using DD and the second using binwalk. 
 
-#### Tools needed:
+#### Tools and Files Needed:
 ##### 1. Firmware file for device. We will be using the [D-Link DCS-5020L Camera.](https://support.dlink.ca/ProductInfo.aspx?m=DCS-5020L)
-##### 2. [Binwalk](https://support.dlink.ca/ProductInfo.aspx?m=DCS-5020L)
+##### 2. [Binwalk](https://github.com/ReFirmLabs/binwalk)
+##### 3. [Firmwalker](https://github.com/craigz28/firmwalker)
 
 #### Step 1: Choose Device
 ##### The first step of this process is to choose an IoT device to analyze. We have chosen the D-Link DCS-5020L network camera. This $120 camera has many features such as a wide viewing range with pan/tilt, mobile app functionality and can even function as a Wi-Fi extender. 
 
-Figure X - D-Link DCS-5020L Network Camera [14]
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image17.png)
 
-Acquire Firmware File
-Next, we need to acquire the firmware file for this IoT camera. As this device is updated manually, we need to go to the D-Link support site and download the firmware file, as per Figure X. 
+#### Step 2: Acquire Firmware File
+##### Next, we need to acquire the firmware file for this IoT camera. As this device is updated manually, we need to go to the D-Link support site and download the firmware file, linked above. 
 
-Figure X - Download firmware file for D-Link DCS-5020L [16]
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image3.png)
 
-Determine File Type
-Next, we need to learn a little bit more about the firmware file we have downloaded. We want to make sure it isn’t compressed, encrypted or corrupted. We can do this by running the file command on the firmware file and the output of the file command is shown at Figure X. It appears that the firmware file is not corrupt or encrypted, and it is for the 5020L IoT Camera. 
+#### Step 3: Analyze File
+##### Next, we need to learn a little bit more about the firmware file we have downloaded. We want to make sure it isn’t compressed, encrypted or corrupted. We can do this by running the file command on the firmware file. It appears that the firmware file is not corrupt or encrypted, and it is for the 5020L IoT Camera. 
+
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image9.png)
+
+
 
 
 Figure X - Output of the file command
 
-Analyze the image using Binwalk
+#### Step 4: Analyze the image using Binwalk
 The next step is to analyze the image using a binwalk. This will tell us some important details about the content of the image. As per Figure X, There appears to be a UBOOT bootloader at the 99360 offset. The OS is Linux and it is running a MIPS instruction set. At offset 327744 there is some LZMA compressed data, which is the file system. The uImage header above it says it is a OS Kernel Image compressed with LZMA. 
 
 
@@ -36,7 +41,7 @@ Figure X - Running the Binwalk command on the binary file.
 
 
 
-Entropy Analysis Before Extraction
+#### Step 5: Entropy Analysis Before Extraction
 Before we extract the file, we can do entropy analysis to determine if the entire file system is compressed. We can use Binwalk with the “-e” flag to do this. Running the command in Figure X displays an entropy plot as shown in Figure X. As per the entropy plot, the entire firmware file appears to have a high entropy, which makes sense, as the file system is compressed. 
 Figure X - Determining Entropy of firmware file using binwalk
 
@@ -44,7 +49,7 @@ Figure X - Determining Entropy of firmware file using binwalk
 Figure X - Examining the entropy plot of the file
 
 
-Extracting the compressed file system using DD
+#### Step 6: Extracting the compressed file system using DD
 The next step is to extract the file system from the firmware file. To do this, we need to provide an input file, output file, bytes to skip, byte size and number of bytes. The complete command can be seen in figure Z. The skip and count fields are determined from the binwalk output, and the bytesize (bs) field can remain as 1. 
 
 Figure Z - Complete DD command to extract file system
@@ -58,7 +63,7 @@ The count is the image size, which can also be determined by the original binwal
 Figure X - Highlighted image size filed used for count parameter in DD command
 
 
-Decompress the extracted file
+#### Step 7: Decompress the extracted file
 Now that we have extracted the file system, the next step is to decompress it. As per the previous binwalk output, we have determined that the LZMA file compression algorithm was used. The file can be extracted using the command as per Figure X. 
 
 
@@ -74,7 +79,7 @@ Figure X - Determining Filesystem type.
 Figure X - Confirming file system using the Strings utility. 
 
 
-Extracting File System Using Binwalk
+#### Step 8: Extracting File System Using Binwalk
 Using the “eM” flags in Binwalk, we are able to extract the root filesystem of the camera. The “-e” flag will extract all files identified during the initial file signature scan. The “-M” flag will recursively scan extracted files. This is shown in figure X. After this command is executed, you will need to traverse multiple directories until the “cpio-root” directory is found, which will contain the root directory of the file system, as shown in Figure Y. 
 
 
@@ -86,7 +91,7 @@ Figure Y - Root Directory of firmware file
 
 
 
-Searching the filesystem using Firmwalker
+#### Step 9: Searching the filesystem using Firmwalker
 Now that we have the root directory extracted, we can use Firmwalker to analyze the firmware file for interesting things such as passwords, private keys, emails, IP’s, etc. Figure X displays the process of using firmwalker. To use this tool, you must download the script from the Firmwalker github page, and point it to the root directory of the firmware file (the previously extracted cpio-root directory). 
 
 
