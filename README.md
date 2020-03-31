@@ -45,30 +45,29 @@
 
 
 ##### The *skip* field can be determined using the “decimal” or offset value in the original Binwalk output. This value is 327744. 
-
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image13.png)
 
-##### The *count* is the image size, which can also be determined by the original Binwalk output. This value is 7301445. 
+##### The *count* field is the image size, which can also be determined by the original Binwalk output. This value is 7301445. 
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image4.png)
 
 
 #### Step 7: Decompress the extracted file
-Now that we have extracted the file system, the next step is to decompress it. As per the previous binwalk output, we have determined that the LZMA file compression algorithm was used. The file can be extracted using the command as per Figure X. 
+##### Now that we have extracted the file system, the next step is to decompress it. As per the previous binwalk output, we have determined that the LZMA file compression algorithm was used. The file can be extracted using the command below:
+
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image12.png)
 
 
-Figure X - Decompressing extracted file system using the unlzma utility
-Analyze File System Using the Strings Utility
-Now that we have extracted and decompressed the file system, we can use the strings utility to search for interesting things. For example, we can determine the type of file system by searching for known file system keywords such as “file system”, “CIFS” or “squashfs”. Figure X confirms that the DCS-5020L IoT camera uses the SquashFS file system. We can further confirm this by searching specifically for squashfs, as per figure X. 
-
-
-Figure X - Determining Filesystem type. 
+#### Step 8: Analyze File System Using the Strings Utility
+##### Now that we have extracted and decompressed the file system, we can use the strings utility to search for interesting things. For example, we can determine the type of file system by searching for known file system keywords such as “file system”, “CIFS” or “squashfs”. As per the following image, we can confirm that the DCS-5020L IoT camera uses the SquashFS file system. 
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image8.png)
 
 
 
-Figure X - Confirming file system using the Strings utility. 
+##### We can further confirm this by searching specifically for squashfs, as per figure X. 
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image1.png)
 
 
-#### Step 8: Extracting File System Using Binwalk
+#### Step 9: Extracting File System Using Binwalk
 Using the “eM” flags in Binwalk, we are able to extract the root filesystem of the camera. The “-e” flag will extract all files identified during the initial file signature scan. The “-M” flag will recursively scan extracted files. This is shown in figure X. After this command is executed, you will need to traverse multiple directories until the “cpio-root” directory is found, which will contain the root directory of the file system, as shown in Figure Y. 
 
 
@@ -80,7 +79,7 @@ Figure Y - Root Directory of firmware file
 
 
 
-#### Step 9: Searching the filesystem using Firmwalker
+#### Step 10: Searching the filesystem using Firmwalker
 Now that we have the root directory extracted, we can use Firmwalker to analyze the firmware file for interesting things such as passwords, private keys, emails, IP’s, etc. Figure X displays the process of using firmwalker. To use this tool, you must download the script from the Firmwalker github page, and point it to the root directory of the firmware file (the previously extracted cpio-root directory). 
 
 
