@@ -2,8 +2,8 @@
 
 
 
-## Demo
-### In this section of the report, we will go through the full firmware analysis and extraction process. We will utilize the discussed tools such as binwalk, DD, firmwalker, strings and a decompression tool. We will discuss two approaches to extract the filesystem, the first using DD and the second using binwalk. 
+### Demo
+#### In this section of the report, we will go through the full firmware analysis and extraction process. We will utilize the discussed tools such as binwalk, DD, firmwalker, strings and a decompression tool. We will discuss two approaches to extract the filesystem, the first using DD and the second using binwalk. 
 Choose Device
 The first step of this process is to choose an IoT device to analyze. We have chosen the D-Link DCS-5020L network camera [14]. This $120 MSRP camera has many features such as a wide viewing range with pan/tilt, mobile app functionality and can even function as a Wi-Fi extender [15]. 
 
