@@ -92,18 +92,23 @@ If we take it one step further, we can find the private key of the camera in /et
 ### Other Firmwalker Findings
 
 * root and password 
+
 <img src="image18.png">
 
 * passwd, pwd and ssl 
+
 <img src="image19.png">
 
 * secret, gpg and token
+
 <img src="image20.png">
 
 * ip addresses
+
 <img src="image21.png">
 
 * urls
+
 <img src="image22.png">
 
 
