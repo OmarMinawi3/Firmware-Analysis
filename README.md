@@ -2,10 +2,12 @@
 
 In this blog post, we will go through the full firmware analysis and extraction process. We will utilize tools such as binwalk, DD, firmwalker, strings and a decompression tool. We will discuss two approaches to extract the filesystem, the first using DD and the second using binwalk. 
 
+
 #### Tools and Files Needed:
 1. Firmware file for device. We will be using the [D-Link DCS-5020L Camera](https://support.dlink.ca/ProductInfo.aspx?m=DCS-5020L).
 2. [Binwalk](https://github.com/ReFirmLabs/binwalk)
 3. [Firmwalker](https://github.com/craigz28/firmwalker)
+
 
 #### Step 1: Choose Device
 The first step of this process is to choose an IoT device to analyze. We have chosen the D-Link DCS-5020L network camera. This $120 camera has many features such as a wide viewing range with pan/tilt, mobile app functionality and can even function as a Wi-Fi extender. 
@@ -13,11 +15,11 @@ The first step of this process is to choose an IoT device to analyze. We have ch
 <img src="image17.png">
 
 
-
 #### Step 2: Acquire Firmware File
 Next, we need to acquire the firmware file for this IoT camera. As this device is updated manually, we need to go to the D-Link support site and download the firmware file, linked above. 
 
 <img src="image3.png">
+
 
 #### Step 3: Analyze File
 Next, we need to learn a little bit more about the firmware file we have downloaded. We want to make sure it isn’t compressed, encrypted or corrupted. We can do this by running the file command on the firmware file. It appears that the firmware file is not corrupt or encrypted, and it is for the 5020L IoT Camera. 
@@ -30,6 +32,7 @@ The next step is to analyze the image using a Binwalk. This will tell us some im
 
 <img src="image16.png">
 
+
 #### Step 5: Entropy Analysis Before Extraction
 Before we extract the file, we can do entropy analysis to determine if the entire file system is compressed. We can use Binwalk with the “-e” flag to do this. Running the command in the following figure displays entropy output and an entropy plot. As per the entropy plot, the entire firmware file appears to have a high entropy, which makes sense, as the file system is compressed. 
 
@@ -38,6 +41,7 @@ Before we extract the file, we can do entropy analysis to determine if the entir
 
 ###### Entropy Plot: 
 <img src="image14.png">
+
 
 #### Step 6: Extracting the compressed file system using DD
 The next step is to extract the file system from the firmware file. To do this, we need to provide an input file, output file, bytes to skip, byte size and number of bytes. The *skip* and *count* fields are determined from the Binwalk output when initially analyzing the file. The *bs* (byte size) field can remain as 1.
@@ -59,8 +63,6 @@ Now that we have extracted the file system, the next step is to decompress it. A
 #### Step 8: Analyze File System Using the Strings Utility
 Now that we have extracted and decompressed the file system, we can use the strings utility to search for interesting things. For example, we can determine the type of file system by searching for known file system keywords such as “file system”, “CIFS” or “squashfs”. As per the following image, we can confirm that the DCS-5020L IoT camera uses the SquashFS file system. 
 <img src="image8.png">
-
-
 
 We can further confirm this by searching specifically for squashfs:
 <img src="image1.png">
@@ -86,6 +88,28 @@ Firmwalker produces lots of output, however some interesting findings are presen
 
 If we take it one step further, we can find the private key of the camera in /etc_ro/serverkey.pem:
 <img src="image2.png">
+
+##### Other Firmwalker Findings
+
+* root and password 
+<img src="image18.png">
+
+* passwd, pwd and ssl 
+<img src="image19.png">
+
+* secret, gpg and token
+<img src="image20.png">
+
+* ip addresses
+<img src="image21.png">
+
+* urls
+<img src="image22.png">
+
+
+
+
+
 
 
 
