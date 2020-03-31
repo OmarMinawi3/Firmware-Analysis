@@ -66,27 +66,27 @@
 
 
 
-##### We can further confirm this by searching specifically for squashfs, as per figure X. 
+##### We can further confirm this by searching specifically for squashfs:
 ![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image1.png)
 
 
 #### Step 9: Extracting File System Using Binwalk
-Using the “eM” flags in Binwalk, we are able to extract the root filesystem of the camera. The “-e” flag will extract all files identified during the initial file signature scan. The “-M” flag will recursively scan extracted files. This is shown in figure X. After this command is executed, you will need to traverse multiple directories until the “cpio-root” directory is found, which will contain the root directory of the file system, as shown in Figure Y. 
+##### Using the “eM” flags in Binwalk, we are able to extract the root filesystem of the camera. The “-e” flag will extract all files identified during the initial file signature scan. The “-M” flag will recursively scan extracted files.
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image15.png)
 
 
-Figure X - Extracting all files using Binwalk
-
-
-
-Figure Y - Root Directory of firmware file
-
+##### After this command is executed, you will need to traverse multiple directories until the “cpio-root” directory is found, which will contain the root directory of the file system:
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image5.png)
 
 
 #### Step 10: Searching the filesystem using Firmwalker
-Now that we have the root directory extracted, we can use Firmwalker to analyze the firmware file for interesting things such as passwords, private keys, emails, IP’s, etc. Figure X displays the process of using firmwalker. To use this tool, you must download the script from the Firmwalker github page, and point it to the root directory of the firmware file (the previously extracted cpio-root directory). 
+##### Now that we have the root directory extracted, we can use Firmwalker to analyze the firmware file for interesting things such as passwords, private keys, emails, IP’s, etc. Here is the command needed to do it: 
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image5.png)
 
 
-Figure X - Running firmwalker against root directory of firmware
+##### To use this tool, you must download the script from the Firmwalker github page, and point it to the root directory of the firmware file (the previously extracted cpio-root directory):
+![alt text](https://github.com/OmarMinawi3/Firmware-Analysis/blob/master/image10.png)
+
 
 Firmwalker produces lots of output, however some interesting findings are present in Figure Y. It appears the camera has the telnet binaries installed and it has found some private keys. 
 
