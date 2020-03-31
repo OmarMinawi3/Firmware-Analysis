@@ -3,7 +3,7 @@
 ##### In this blog post, we will go through the full firmware analysis and extraction process. We will utilize tools such as binwalk, DD, firmwalker, strings and a decompression tool. We will discuss two approaches to extract the filesystem, the first using DD and the second using binwalk. 
 
 #### Tools and Files Needed:
-##### 1. Firmware file for device. We will be using the [D-Link DCS-5020L Camera].(https://support.dlink.ca/ProductInfo.aspx?m=DCS-5020L)
+##### 1. Firmware file for device. We will be using the [D-Link DCS-5020L Camera](https://support.dlink.ca/ProductInfo.aspx?m=DCS-5020L).
 ##### 2. [Binwalk](https://github.com/ReFirmLabs/binwalk)
 ##### 3. [Firmwalker](https://github.com/craigz28/firmwalker)
 
