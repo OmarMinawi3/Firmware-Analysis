@@ -94,7 +94,7 @@ I was able to confirm this by searching for the file, and finding some code in /
 
 
 #### Interesting Findings
-After searching through the files on the device, I found many references to a developer named "andy". It appears telnet was disabled sometime in 2012. According to the date of the comment, Andy was patching security issues right before the July 4th holiday. If the month and date are flipped, Andy was reviewing code on a Saturday. I aspire to be like Andy. 
+After searching through the files on the device, I found many references to a developer named "andy". It appears telnet was disabled sometime in 2012. According to the date of the comment, Andy was patching security issues right before the July 4th holiday. If the month and date are flipped, Andy was reviewing code on a Saturday. I aspire to have Andy's work ethic.  
 <img src="image27.png">
 
 
